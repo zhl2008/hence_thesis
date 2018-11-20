@@ -250,15 +250,29 @@ if (session.refer == NULL && ! "*.[png|jpg|gif]" in session.url):
 可能跳过。（复杂与过于主观）
 
 
+滑动时间窗口检测：(可以加进去）
+
+
 **分析学习**
 
 决策树（decision tree）
 Tan and Kumar 利用爬虫的session中的一些特征向量来区分人类用户与爬虫。首先，他们从日志数据中，将所有的请求按照session进行分类。然后他们从每个session中抽取出25个特征向量，并使用其中显著的三个特征为原始数据集打上标签。并在随后的处理中，考虑全部25个特征向量，以之前已经标记好的数据为学习数据使用 C4.5 决策树算法构造决策树。最后的分类效果显示该算法具有较好的覆盖率和准确率。
+【Tan PN, Kumar V (2002) Discovery of Web robot sessions based on their navigational patterns. Data Min Knowl Discov 6(1):9–35】
 
-神经网络（neural network）【可能去除 标记的数据集比较少】
 
 
 隐马尔科夫模型（Hidden Markov model）
+Lu and Yu 在2006年提出一个基于请求到达模式的用户与爬虫识别程序。他们把人类访问的特征概括为访问所有内嵌页面资源的突发性访问HTTP请求，在整个session过程中，会因为阅读和处理页面内容而存在不活跃时间。而爬虫则会以一个稳定均匀的速率爬行特定类型的资源。在他们提出的算法中，他们先将流量按等时间段切片，在每个时间片中会有一到多个请求到达。通过UA来判定是否为爬虫，并以此来标记数据训练HMM。在最后，以未来的请求序列作为已训练的HMM模型的输入，使用forward-backward procedure来计算其可能是爬虫请求的概率。
+
+
+图灵测试系统（turing test system)
+Completely Automated Public Turing test to tell Computers and Humans Apart（CAPTCHA）最早在2003年由Ahn等人提出。CAPTCHA通常都是以验证码形式存在，设计的目标是让真实使用者更容易通过测试而爬虫更难通过测试。
+
+
+隐性的人类浏览行为(implicit human browsing behavior)
+通过一些隐性的人类浏览网页时特有的行为来帮助区分真实用户和爬虫。比如在服务端生成一个秘钥k，并编码在混淆后的javascript中，当javascript被执行后，或者监听到某些人类用户特有的行为后（如点击事件或者键盘键入），使用该k向服务端请求响应的url地址，则该请求来源可以被标记为人类用户。针对真实用户与爬虫访问的资源类型不同，可以使用特殊标记的CSS样式表文件或者透明像素的图片文件来识别爬虫。正常加载这些标记文件有很大的可能性是正常用户，而未加载这些资源的用户，则很可能是爬虫。
+
+
 
 
 
@@ -268,9 +282,28 @@ IP访问频率检测：
 
 
 
+##爬虫溯源技术
+
+浏览器追踪技术 
+CANVAS指纹
+Web RTC指纹
+防盗链技术
+
+headless webdriver
+
+基于滑动时间窗口的反爬虫机制
+
+
+
+
+
+
+
 
 session检测
 离线日志分析（offline robots detection)
+
+
 
 PathMarker
 
@@ -287,15 +320,7 @@ PathMarker
 
 
 
-##爬虫溯源技术
 
-浏览器追踪技术 
-CANVAS指纹
-Web RTC指纹
-防盗链技术
-
-
-基于滑动时间窗口的反爬虫机制
 
 
 

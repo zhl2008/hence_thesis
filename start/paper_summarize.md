@@ -171,12 +171,72 @@ web页面按其存在方式一般分为表层网和深层网。表层网通常�
 聚焦爬虫策略的关键是对访问页面和链接的重要性进行评分，并以此作为页面爬取先后的顺序的参考依据，而不同算法计算出的页面重要性也有所不同，从而导致爬虫爬行轨迹的不同。
 
 基于内容的爬行策略：
-Paul在他的论文中提出了Fish-Search算法【Information Retrieval in Distributed Hypertexts】，以页面内容与爬虫的聚焦主题的相关性作为度量标准。鱼群按照深度优先的策略在爬行空间中巡游，相关度高的分支，鱼群的数量会增加；而相关度低的分支，鱼群的数量会降低。通过这样的机制来保证主要的爬虫资源和时间能够聚焦在感兴趣的主题上。    
+Paul在他的论文中提出了Fish-Search算法【Information Retrieval in Distributed Hypertexts】，以页面内容与爬虫的聚焦主题的相关性作为度量标准。鱼群按照深度优先的策略在爬行空间中巡游，相关度高的分支，鱼群的数量会增加；而相关度低的分支，鱼群的数量会降低。通过这样的机制来保证主要的爬虫资源和时间能够聚焦在感兴趣的主题上。 
+
+基于链接结构的爬行策略：
+Page rank算法主要用于对搜索引擎搜索到的内容进行结果排序，也可以用于评价链接的重要性。在爬虫选取爬行链接时会优先选取Page rank较大的页面中的链接作为优先爬取的对象。
+
+基于增强学习的爬行策略：
+Rennie 和 McCallum将增强学习（reinforcement learning)引入聚焦爬虫，他们试图通过机器学习找到一组策略，使得对于该策略的激励达到最优解。【Using Reinforcement Learning to Spider the Web Efficiently】
+
+基于语境图的爬行策略：
+Diligenti提出一种通过建立语境图来描述不同网页之间相关度的算法。用大量的数据训练一个机器学习系统，利用该系统计算不同页面到某一主题页面的距离，以此作为确定访问顺序的参考。
+
+
+
+###爬虫检测方法
+
+日志语法分析模式 （Syntactical log analysis）
+流量模式分析 （Traffic pattern analysis）
+分析学习（Analytical learning techniques）
+图灵测试系统（Turing test systems）
+
+**日志语法分析模式 **
+
+1.独立字段解析（individual field parsing）
+通过比较HTTP请求中独立字段与数据库中的爬虫常使用关键字和banner信息，来判定请求是否来源于爬虫。常用的字段主要是User-Agent。基于User-Agent和其他类似的头部内容检测方法，是检测爬虫最为简单且常用的方法。部分爬虫不会修改其HTTP头部的User-Agent字段，而直接使用其原始的UA对网页进行爬取。而浏览器的UA与爬虫的UA有着明显的区别，甚至可以通过User-Agent字段中的特殊关键词判断访问的浏览器的类型。但是，一部分未知爬虫的UA特征可能并未收集在数据库中还有一些爬虫会修饰其的User-Agent字段，使得通过UA进行单一爬虫检测的漏检率很高。【Prince MB, Holloway L, Keller AM (2005) Understanding how spammers steam your e-mail address: An
+analysis of the first six months of data from project honey pot. In: Second conference on Email and
+Anti-Spam】
+
+2.多层次日志分析（multifaceted log analysis）
+首先，请求robots.txt的访问者被标记为爬虫，这样的流量大概占总web应用访问流量的0.5%。然后，再对日志中的访问IP地址做反向DNS查询，如果dns解析得到的域名中包含诸如robot, bot, search, spider以及crawl这样的关键字，则可以将访问者标记为爬虫，使用该方法大概能检测到16.1%的流量来源于爬虫。最后，通过从网络搜集的爬虫池的IP地址段，来标记来源于爬虫IP的访问。
+
+
+
+【Huntington P, Nicholas D, Jamali HR (2008) Web robot detection in the scholarly information environment.
+J Info Sci 34:726–741】
+
+
+IP访问频率检测：
+人类访问网页的速度和爬虫访问网页速度有明显的区别。爬虫在设计上往往是多线程和高并发。通过设置相应的cookie可以用于统计在某个时间段，某个session的访问频率，对于访问频率高的session，使用CAPTCHA来进行人机验证。对于没有通过人机验证，且session访问频率超过阈值的访问会话，一律阻断其连接。
 
 
 
 
+session检测
+离线日志分析（offline robots detection)
 
+PathMarker
+
+
+
+
+###headless webdriver
+
+
+
+
+改变网页结构
+重要的数据图片化
+
+
+
+##爬虫溯源技术
+
+浏览器追踪技术 
+CANVAS指纹
+Web RTC指纹
+防盗链技术
 
 
 基于滑动时间窗口的反爬虫机制

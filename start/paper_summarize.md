@@ -180,7 +180,10 @@ Page rank算法主要用于对搜索引擎搜索到的内容进行结果排序�
 Rennie 和 McCallum将增强学习（reinforcement learning)引入聚焦爬虫，他们试图通过机器学习找到一组策略，使得对于该策略的激励达到最优解。【Using Reinforcement Learning to Spider the Web Efficiently】
 
 基于语境图的爬行策略：
-Diligenti提出一种通过建立语境图来描述不同网页之间相关度的算法。用大量的数据训练一个机器学习系统，利用该系统计算不同页面到某一主题页面的距离，以此作为确定访问顺序的参考。
+Diligenti提出一种通过建立语境图来描述不同网页之间相关度的算法。用大量的数据训练一个机器学习系统，利用该系统计算不同页面到某一主题页面的距离，以此作为确定访问顺序的参考.
+
+
+
 
 
 
@@ -205,6 +208,59 @@ Anti-Spam】
 
 【Huntington P, Nicholas D, Jamali HR (2008) Web robot detection in the scholarly information environment.
 J Info Sci 34:726–741】
+
+
+
+**流量模式分析**
+
+语法与模式分析（syntactic and pattern analysis）
+Geens et al. 最早提出了将语法分析与流量分析模式结合在一起的检测方法，并给定了两个评估参数:
+r 覆盖率 r = 检测出爬虫数量/实际爬虫数量
+p 准确率 p = 检测出爬虫数量/被检测器标记为爬虫的数量
+通过人工标记数据的方法，分别计算每种分析模式的r和p，并最终得出了以下的检测策略（以伪代码描述）：
+
+if ("/robots.txt" in session.url):
+    session.role = robots
+if (session.ip in robots.ip):
+    session.role = robots
+if (session.ua in robots.ip):
+    session.role = robots
+if (HEAD in session.methods):
+    session.role = robots
+if (session.refer == NULL && ! "*.[png|jpg|gif]" in session.url):
+    session.role = robots
+    
+
+【Geens N, Juysmans J, Vanthienen J (2006) Evaluation of Web robot discovery techniques: a benchmarking study. In: Lecture notes in computer science vol 4065/2006, pp 121–130】
+
+
+资源请求模式分析（resource request patterns）
+
+爬虫在爬取网站时，往往会聚焦于一些特殊的网络资源。guo等人利用这一特性，提出了一种基于资源请求模式分析的爬虫检测方法。首先在第一种策略中，他们将请求的url资源分为网页，文档，脚本，图片，视频，下载等多种类型。然后他们将依据IP，UA这些信息，区分不同的请求客户端，并统计每一个客户端针对每种资源的访问次数。如果访问次数过多或者访问占比过多，则可以认为请求来自于爬虫；在第二种策略中，他们统计了同一个session对同一个网页的所有资源的请求次数，如果同一个网页中的资源请求数有较大的差异，则可以认为当前的session来自于爬虫。
+
+请求速率模式分析 （query rate patterns）
+为了从速率模式区分正常访问与爬虫访问，需要采集如下的信息：
+请求提交速率，请求平均时间间隔，session的活动持续时间，请求时间与作息时间的相关性。
+在Duskin的文章中，他们提出了两种不同的爬虫检测方法：
+首先，基于每个session的请求总次数来划分人类和爬虫；
+然后，基于每个session的最短请求间隔时间来区分人类和爬虫。
+
+
+流量指标分析：
+可能跳过。（复杂与过于主观）
+
+
+**分析学习**
+
+决策树（decision tree）
+Tan and Kumar 利用爬虫的session中的一些特征向量来区分人类用户与爬虫。首先，他们从日志数据中，将所有的请求按照session进行分类。然后他们从每个session中抽取出25个特征向量，并使用其中显著的三个特征为原始数据集打上标签。并在随后的处理中，考虑全部25个特征向量，以之前已经标记好的数据为学习数据使用 C4.5 决策树算法构造决策树。最后的分类效果显示该算法具有较好的覆盖率和准确率。
+
+神经网络（neural network）【可能去除 标记的数据集比较少】
+
+
+隐马尔科夫模型（Hidden Markov model）
+
+
 
 
 IP访问频率检测：

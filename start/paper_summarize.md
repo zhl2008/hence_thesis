@@ -316,7 +316,9 @@ Firefox 特殊信息和字体列表。
 浏览器特定指纹：
 ECKERSLEY根据浏览器的环境，通过收集一些网站能够获取的浏览器常用或者不常用的特性，用以生成浏览器的指纹。这些特性中有一部分可以通过简单静态的HTTP请求中推断出来，也可以经由AJAX接口收集。特性收集过程中，有一部分特性是简单明了的，但有一部分特性是来源于一些浏览器细节。有些浏览器禁用了javascript，那么他会使用video，plugins，fonts和supercookie的默认值。因此可以通过这一细节来推断出浏览器是否禁用了javascript。以下是一些常用的，易于采集的浏览器特性：
 ![屏幕快照 2018-11-21 下午12.29.56](https://lh3.googleusercontent.com/-yUzBmjaRXPk/W_Tf1kB3zLI/AAAAAAAAAHU/raDJHdPPDigjFvOQp_9pTGgi6hv4eYiSACHMYCw/I/%255BUNSET%255D)
-
+[ECKERSLEY P.How Unique Is Your Browser[EB/OL]. https://
+defcon.org/images/defcon-18/dc-18-presentations/Eckersley/
+DEFCON-18-Eckersley-Panopticlick.pdf,2017-2-1]
 
 
 Canvas 指纹:
@@ -335,24 +337,52 @@ context.fillText("Hello, user.", 2, 2);
 </script>
 ```
 * Canvas 像素抽取
+【MOWERY K,SHACHAM H.Pixel Perfect: Fingerprinting Canvas in
+HTML5[EB/OL]. http://cseweb.ucsd.edu/~hovav/dist/canvas.pdf,2017-2-1.】
 2d context提供了一个getImageData方法，通过该方法能够获取一个给定区域范围内的图片对象，该对象是以图片中的每一个元素的RGBA值组成的。
 其次，canvas对象本身提供toDataURL方法，当提供一个图片作为该方法的输入后，该方法能够将完整的图片内容以base64编码的形式返回。
 以上两个方法均严格遵循浏览器同源策略。
 
 * WebFront
-webFront是定义在CSS3中的规范，允许用户按需加载远程字体，而不是只能依赖于已经安装在本地的字体。在使用这个特性时
+webFront是定义在CSS3中的规范，允许用户按需加载远程字体，而不是只能依赖于已经安装在本地的字体。在使用这个特性时，需要加入@front-face这样一条规则，并使用src属性指定远程字体资源的url地址。
+为了使用WebFront，需要开启WebFront Loader函数库。通过使用该函数库，WebFront仅仅通过JavaScript就能够加载。
+
+* WebGL
+WebGL提供了一个javascript的API用于在canvas上绘制图像，目前的主流浏览器都支持WebGL的硬件加速选项，可以使用图形硬件来渲染每一帧，目前WebGL也通过各自的canvas环境暴露出相应的函数接口，类似于OpenGL API,可以使用GLSL（OpenGL Shading Language）编程，在编译后，可以直接运行在硬件显卡上。
 
 
 
 JavaScript 引擎指纹
-跨浏览器指纹
+【Fast and Reliable Browser Identification with
+JavaScript Engine Fingerprinting】
+MULAZZANI等人提出了通过javascript的一致性测试的结果来区分不同浏览器，从而生成指纹的方法。首先对于某一浏览器执行一组一致性测试，然后将失败的测试集与已知的浏览器的失败测试集作比较，从而匹识别出一个特定的浏览器类型及其版本。
+
+**跨浏览器指纹**
+Cao等人提出可以通过利用OS以及硬件层的特性，如显卡，CPU和已经安装的脚本插件等，可以用于区分不同的浏览器，对于同一宿主机上的不同浏览器，依然有着显著的效果。
+
+**WebRTC指纹**
+webRTC全称为（web-based realtime communication)。它在浏览器与浏览器或者设备与设备之间直接建立通信的信道，而不需要经由第三方服务器的转发。最初的设计目的是提供直接地点到点的视频和音频传输手段，因此webRTC协议对外提供了一系列的realtime transport protocol的API接口，其系统的系统架构如下图所示：
+![屏幕快照 2018-11-21 下午9.04.36](https://lh3.googleusercontent.com/-4uzgmHIZ5hc/W_VYA2s3sHI/AAAAAAAAAHg/G5F5sriPSHMHePR45aK7J9wuAL9ZL570ACHMYCw/I/%255BUNSET%255D)
+webRTC的通信信道建立过程如下:
+1.初始节点创建一个包含初始端点的offer；
+2.该offer通过信号通道（signalling channel)传递到另一个节点；
+3.另一个节点基于offer创建相应的回答并将其返回到初始节点；
+4.两个通信节点将通过ICE协议来连接STUN服务器来解析公共地址信息，并检查连通性；
+5.当每个节点都有对方的信息时，连接完成，数据传输开始。
+
+WebRTC规范中不允许明文发送数据，双方为每次连接生成一个新的自签名的证书，signal channel作为一个可信信道来传输证书指纹，从而实现认证。尽管webRTC使用了具有高度高度安全性的传输协议，但是也引入了新的需要额外保护的敏感资源：
+1.两个端点的外网IP（c-s模型中，server能获得client的ip，在webRTC中，两个建立通信的端点可以获得对方的外网IP）；
+2.私有IP和内部网络（在连接过程中，client的私有IP被暴露）
+3.节点身份（c-s模型中只需要验证服务器的身份，在webRTC模型中需要验证双方的身份）
 
 
-**指纹技术评估:**
 
 
 
-**浏览器指纹干扰**
+
+
+
+
 
 
 **headless web driver**
@@ -371,7 +401,9 @@ cookie追踪：
 https://panopticlick.eff.org/results?aat=1&a=111&t=111&dnt=111#fingerprintTable
 
 CANVAS指纹
+
 Web RTC指纹
+
 防盗链技术
 
 headless webdriver

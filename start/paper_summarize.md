@@ -319,7 +319,31 @@ ECKERSLEY根据浏览器的环境，通过收集一些网站能够获取的浏�
 
 
 
-Canvas 指纹
+Canvas 指纹:
+Mowery和Shacham提出了通过HTML 5 的 Canvas API以及WebGL渲染文本得到像素差异，作为一种具有高信息熵的浏览器指纹生成方式。
+canvas元素是html5规范中新增的一类元素，能够在屏幕上可编程地绘制图像，并且被大部分主流的浏览器支持。
+绘制一个基本的canvas图形的方法相当简单：需要浏览器提供给用户一个图形渲染的环境， 使用环境中的API来渲染你对canvas图像的操作和改变。在目前使用的html5规范中，广泛使用的2d环境能提供诸如fillRect, lineTo以及arc这样的一些基本绘图功能。也有一些复杂的功能可以支持贝塞尔曲线，颜色梯度的这样一些功能。
+* Canvas Text渲染：
+给定字体，字体颜色以及位置参数，2d context能够在canvas绘制出任意的文本，如下是一个调用canvas的案例：
+```javascript
+<script type="text/javascript">
+var canvas = document.getElementById("drawing");
+var context = canvas.getContext("2d");
+context.font = "18pt Arial";
+context.textBaseline = "top";
+context.fillText("Hello, user.", 2, 2);
+</script>
+```
+* Canvas 像素抽取
+2d context提供了一个getImageData方法，通过该方法能够获取一个给定区域范围内的图片对象，该对象是以图片中的每一个元素的RGBA值组成的。
+其次，canvas对象本身提供toDataURL方法，当提供一个图片作为该方法的输入后，该方法能够将完整的图片内容以base64编码的形式返回。
+以上两个方法均严格遵循浏览器同源策略。
+
+* WebFront
+webFront是定义在CSS3中的规范，允许用户按需加载远程字体，而不是只能依赖于已经安装在本地的字体。在使用这个特性时
+
+
+
 JavaScript 引擎指纹
 跨浏览器指纹
 

@@ -360,7 +360,7 @@ MULAZZANI等人提出了通过javascript的一致性测试的结果来区分不�
 **跨浏览器指纹**
 Cao等人提出可以通过利用OS以及硬件层的特性，如显卡，CPU和已经安装的脚本插件等，可以用于区分不同的浏览器，对于同一宿主机上的不同浏览器，依然有着显著的效果。
 
-**WebRTC指纹**
+**WebRTC技术**
 webRTC全称为（web-based realtime communication)。它在浏览器与浏览器或者设备与设备之间直接建立通信的信道，而不需要经由第三方服务器的转发。最初的设计目的是提供直接地点到点的视频和音频传输手段，因此webRTC协议对外提供了一系列的realtime transport protocol的API接口，其系统的系统架构如下图所示：
 ![屏幕快照 2018-11-21 下午9.04.36](https://lh3.googleusercontent.com/-4uzgmHIZ5hc/W_VYA2s3sHI/AAAAAAAAAHg/G5F5sriPSHMHePR45aK7J9wuAL9ZL570ACHMYCw/I/%255BUNSET%255D)
 webRTC的通信信道建立过程如下:
@@ -384,7 +384,67 @@ WebRTC规范中不允许明文发送数据，双方为每次连接生成一个�
 
 
 
-**headless web driver**
+**selenium与headless broswer**
+
+越来越多的网站使用混淆的javascript来进行动态的页面渲染，以增加爬虫爬取网站的难度。但是，开源的web自动化测试工具集selenium为运行页面中内嵌的javascript提供了成熟的解决方案，因此，常被各类爬虫用于对抗使用了js混淆的网站。在selenium升级到2.0之后【基于Selenium的Web自动化测试解释器_沈大框】，它重点发展了selenium webdriver，由以前的使用selenium server与浏览器通信到使用浏览器自身的webdriver与浏览器进行通信，绕过了javascript沙箱，提升了测试效率和对各个浏览器的兼容性。
+selenium对外分开放了大量API接口，可以使用各类编程语言控制测试过程。
+
+![屏幕快照 2018-11-22 上午10.33.27](https://lh3.googleusercontent.com/-s7_oXyx7jvU/W_YVjzR-LrI/AAAAAAAAAHs/qqmxi9zcwc4_KrSx0a0GHgCR0LjGyDyrwCHMYCw/I/%255BUNSET%255D)
+
+headless web driver 是一种没有UI界面的模拟浏览器，这些浏览器能够运行网页中的代码，但是不会直接显示其渲染效果。比较著名的headless broswer有chrome headless以及phantomjs。phantomjs可以运行大部分主流的操作系统上，使用QtWebKit作为后端，可以支持各种各样的web标准，包括但不限于：DOM树解析，CSS选择器，JSON数据解析，CANCAS渲染等。
+
+
+
+###爬虫漏洞自动化挖掘
+符号执行：
+
+###符号执行定义
+符号执行是二进制动态分析中一种至关重要的技术。它的关键思想是使用符号值而不是固定值，用作程序或者函数的输入。并将程序中的变量表示成与符号输入相关的符号表达式。最终，程序输出的计算结果以符号输入的函数表示。
+在软件测试中，符号执行常用于生成能够达到每一个执行路径的测试输入集。简而言之，就是一个程序执行的路径通常是true和false条件的序列，这些条件是在分支语句处产生的。在序列的i^{th} 位置如果值是true，那么意味着i^{th} 条件语句走的是then这个分支；反之如果是false就意味着程序执行走的是else分支。一个程序中的所有路径可以构成一株执行树。
+
+符号执行在执行过程中维护一个状态a，用于将变量映射到符号表达式，以及一个符号路径约束pc，是一个无量词的一阶公式。在函数的初始化阶段，a被初始化成空的映射，pc为True。a和
+PC在符号执行过程中不断被更新。当符号执行到达一条执行路径的尽头时，可以通过约束求解器和给定的PC，计算出能够到达该路径的实际值。
+对于包含循环或者递归的代码的符号执行，如果循环或者递归的次数是符号化的，那么可能回得到一个无穷的路径。 例如在如下的代码中
+1 void testme inf () {
+2 int sum = 0;
+3 int N = sym input();
+4 while (N > 0) {
+5 sum = sum + N;
+6 N = sym input();
+7 }
+8 } 
+    
+一个包含n个True，并紧接着一个False的符号路径约束表达式是：
+公式xxxx
+因此，在实际应用中，通常需要限制符号执行的超时时间或者路径的数量。
+
+传统的符号执行还有一个致命的缺陷，就是当符号路径中存在不能被约束求解器高效求解的公式时，符号执行的输入就难以被计算出来。
+
+
+###现代符号执行技术
+
+**concolic testing**
+一般称具体执行，或者导向型自动随机化测试【P. Godefroid, N. Klarlund, and K. Sen. DART: Directed
+Automated Random Testing. In PLDI’05, June 2005.】
+在动态符号执行的基础上，程序会接受一些固定的输入值。具体执行维护了维护固定状态（concrete state）以及符号状态（symbolic state)两种状态。符号状态仅仅保留没有具体值的变量的映射，而固定状态保留所有变量到他们具体值的映射。和传统的符号执行不一样，因为具体执行技术保存了在符号执行过程中保留了完整的固定状态，它需要一些初始的输入值。
+
+
+
+污点分析
+
+插桩技术
+
+
+
+
+
+
+
+
+
+selenium自动测试
+headless webdriver
+
 
 
 

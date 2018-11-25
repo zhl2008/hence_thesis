@@ -67,7 +67,7 @@ Web RTC
 
 Crawler Trap：Design, implement and evaluate an anti-crawling system
 
-With the flourishment of the Applications based on the Big Data and Artificial Intelligence, it has arouse our attention in how to collect numerous valid data rapidly at the least cost, which could be regarded as an aspect of competence both for the individuals and the companies. And thus, the power of the crawlers in collecting data has been addressed. However, there are plenty of malicious crawlers filling in the cyber space, try to deplete the servers' resource with endless requests concurrently, or theft the sensitive data for illegal use.
+With the flourish of the Applications based on the Big Data and Artificial Intelligence, it has arouse our attention in how to collect numerous valid data rapidly at the least cost, which could be regarded as an aspect of competence both for the individuals and the companies. And thus, the power of the crawlers in collecting data has been addressed. However, there are plenty of malicious crawlers filling in the cyber space, try to deplete the servers' resource with endless requests concurrently, or theft the sensitive data for illegal use.
 
 Therefore, we are supposed to build up a feasible and robust anti-crawling system to stop those malicious crawlers, while most of the contemporary anti-crawling systems are using the passive strategies. Those anti-crawling systems could only harness single mechanism to block the crawlers( such as IP blocks, limit the frequency of requests, fake data), and that does not seems to be effective in most cases. In this paper, I propose an anti-crawling system, which combines the crawler detection with the analysis of crawler's behaviors, then utilize the dynamic symbolic execution, fuzzing and dynamic taint analysis， to excavate the vulnerabilities of the frameworks, the handle scripts and the headless web-driver binaries of the crawlers. Ultimately, malicious payloads would be generated to feed the crawler when it crawls our pages, leading it to crash down or even obtain the system privileges of the crawler's host. In addition, at the end of paper, I would build up the prototype of the anti-crawling system according to the technologies and mechanisms mentioned before, with the deployment to the web application in real production environment. Furthermore, several tests would be conducted with the most common crawlers gathered from the Internet to testify its ability to block the crawlers and the performance.
 
@@ -279,7 +279,7 @@ Completely Automated Public Turing test to tell Computers and Humans Apart（CAP
 
 **浏览器指纹：**
 不同用户的浏览器具有不同的特征信息和丰富的数据，网站可以通过在用户访问时通过不同的 API 和技术手段获取浏览器特征信息构建独特的浏览器指纹。浏览器指纹技术能够在无cookie的情况下提供一种追踪用户的鲁棒性方案。
-常用的浏览器指纹包括：
+
 
 浏览器指纹算法：
 令指纹生成算法为 F(⋅)。当出现一个新的浏览器信息
@@ -327,7 +327,7 @@ canvas元素是html5规范中新增的一类元素，能够在屏幕上可编程
 绘制一个基本的canvas图形的方法相当简单：需要浏览器提供给用户一个图形渲染的环境， 使用环境中的API来渲染你对canvas图像的操作和改变。在目前使用的html5规范中，广泛使用的2d环境能提供诸如fillRect, lineTo以及arc这样的一些基本绘图功能。也有一些复杂的功能可以支持贝塞尔曲线，颜色梯度的这样一些功能。
 * Canvas Text渲染：
 给定字体，字体颜色以及位置参数，2d context能够在canvas绘制出任意的文本，如下是一个调用canvas的案例：
-```javascript
+```
 <script type="text/javascript">
 var canvas = document.getElementById("drawing");
 var context = canvas.getContext("2d");

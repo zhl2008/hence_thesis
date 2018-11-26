@@ -34,6 +34,18 @@ ence on Very Large Database, Cairo, Egypt, 2000.
 [27] Mowery K, Shacham H. Pixel perfect: Fingerprinting canvas in HTML5[J]. Proceedings of W2SP, 2012: 1-12.
 [28] Mulazzani M, Reschl P, Huber M, et al. Fast and reliable browser identification with javascript engine fingerprinting[C]. Web 2.0 Workshop on Security and Privacy (W2SP). 2013, 5.
 [29] BODA K,FOLDES A M,GULYAS G G,et al.User Tracking on the Web via Cross-browser Fingerprinting[M]. Information Security Technology for Applications. Heidelberg:Springer, Berlin, Heidelberg, 2012:31-46.
+[30] Reiter A , Marsalek A . WebRTC: your privacy is at risk[C]. Symposium. 2017.
+[31] 张添. 基于Selenium的Web自动化测试[D]. 北京交通大学, 2014.
+[32] Cadar C , Sen K . Symbolic execution for software testing: three decades later[M]. ACM, 2013.
+[33] All You Ever Wanted to Know About
+Dynamic Taint Analysis and Forward Symbolic Execution
+[34]Godefroid P, Klarlund N, Sen K. DART: directed automated random testing[C]. ACM Sigplan Notices. ACM, 2005, 40(6): 213-223.
+[35] Cadar C , Dunbar D , Engler D . KLEE: unassisted and automatic generation of high-coverage tests for complex systems programs[C]. Usenix Conference on Operating Systems Design & Implementation. USENIX Association, 2009.
+[36] Sen K, Marinov D, Agha G. CUTE:a concolic unit testing engine for C[J]. Acm Sigsoft Software Engineering Notes, 2005, 30(5):263-272.
+[37] Cadar C , Dunbar D , Engler D . KLEE: unassisted and automatic generation of high-coverage tests for complex systems programs[C]. Usenix Conference on Operating Systems Design & Implementation. USENIX Association, 2009.
+[38] Manuel Egele, Christopher Kruegel, Engin Kirda, Heng Yin, and Dawn Song. Dynamic spyware analysis. In Proceedings of the USENIX Annual Technical Conference, June 2007.
+[39] Flanagan C, Saxe J B. Avoiding exponential explosion: generating compact verification conditions[J]. ACM SIGPLAN Notices, 2001, 36(3):193-205.
+
 
 
 
